@@ -23,6 +23,9 @@ wire clk_ddr;
 wire clk_ddr_dqs;
 wire clk_ref;
 
+// Not instantiated in Verilator.
+glbl glbl();
+
 artix7_pll
 u_pll
 (
@@ -277,7 +280,7 @@ begin
     ram_req_id     = 0;
 
     @(posedge clk);
-    
+
     ram_write(0,  128'hffeeddccbbaa99887766554433221100, 16'hFFFF);
     ram_write(16, 128'hbeaffeadd0d0600d5555AAAA00000000, 16'hFFFF);
     ram_write(32, 128'hffffffff111111112222222233333333, 16'hFFFF);
@@ -299,11 +302,12 @@ begin
     begin
         $fatal(1, "ERROR: Data mismatch!");
     end
-    
+
     #1000
-    @(posedge clk);   
+    @(posedge clk);
     $finish;
 
 end
 
 endmodule
+
