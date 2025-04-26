@@ -170,6 +170,9 @@ reg prio_rd_q;
 
 // Round robin priority between read and write
 wire write_prio_w   = ~prio_rd_q || !axi_arvalid_i;
+
+reg        awvalid_q;
+wire        awvalid_w = axi_awvalid_i | awvalid_q;
 wire read_prio_w    = prio_rd_q  || !awvalid_w;
 
 always @ (posedge clk_i )
@@ -188,7 +191,7 @@ wire read_enable_w  = read_prio_w  & ~read_limit_w;
 //-------------------------------------------------------------
 // Write Buffer
 //-------------------------------------------------------------
-reg        awvalid_q;
+//reg        awvalid_q;
 reg [31:0] awaddr_q;
 reg [7:0]  awlen_q;
 reg [3:0]  awid_q;
@@ -228,7 +231,7 @@ begin
     awid_q    <= axi_awid_i;
 end
 
-wire        awvalid_w = axi_awvalid_i | awvalid_q;
+//wire        awvalid_w = axi_awvalid_i | awvalid_q;
 wire [31:0] awaddr_w  = awvalid_q ? awaddr_q : axi_awaddr_i;
 wire [7:0]  awlen_w   = awvalid_q ? awlen_q  : axi_awlen_i;
 wire [3:0]  awid_w    = awvalid_q ? awid_q   : axi_awid_i;
