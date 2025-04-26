@@ -29,6 +29,6 @@
 `define TB_VCD(TOP, NAME)     \
     initial \
     begin \
-       $dumpfile(``NAME);  \
+       $dumpfile(NAME);  \
        $dumpvars(0,``TOP); \
     end
